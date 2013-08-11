@@ -128,11 +128,15 @@
   }
 
   // only functions that need defined specific to charting library
-  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart, waitForLoaded;
+  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart, waitForLoaded, getSVG;
 
   if ("Highcharts" in window) {
     waitForLoaded = function(callback) {
       callback();
+    };
+
+    getSVG = function(element) {
+      return $(element).highcharts().getSVG({exporting: {sourceWidth: $(element).width()}});
     };
 
     var defaultOptions = {
@@ -300,6 +304,10 @@
       if (loaded) {
         callback();
       }
+    };
+
+    getSVG = function(element) {
+      return element.getElementsByTagName("svg")[0].parentNode.innerHTML;
     };
 
     // Set chart options
@@ -534,8 +542,7 @@
 
   function getDataUri(element) {
     var canvas = document.createElement("canvas");
-    var svg = "Highcharts" in window ? $(element).highcharts().getSVG({exporting: {sourceWidth: $(element).width()}}) : element.getElementsByTagName("svg")[0].parentNode.innerHTML;
-    window.canvg(canvas, svg);
+    window.canvg(canvas, getSVG(element));
     return canvas.toDataURL("image/png");
   }
 

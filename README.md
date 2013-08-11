@@ -76,13 +76,13 @@ new Chartkick.LineChart("chart-1", "/stocks");
 Min and max values (except pie chart)
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"min": 1000, "max": 5000});
+new Chartkick.LineChart("chart-1", data, {"min": 1000, "max": 5000});
 ```
 
 You can pass options directly to the charting library with:
 
 ```javascript
-new Chartkick.LineChart("chart-1", {"Football": 45, "Soccer": 56}, {"library": {"backgroundColor": "pink"}});
+new Chartkick.LineChart("chart-1", data, {"library": {"backgroundColor": "pink"}});
 ```
 
 ### Data
@@ -117,6 +117,27 @@ If you prefer Highcharts, use:
 ```
 
 Works with Highcharts 2.1+
+
+## Download Charts
+
+Give users the ability to save charts as PNGs without server-side image libraries.
+
+First, include [canvg](https://code.google.com/p/canvg/) before `chartkick.js`.
+
+```html
+<script src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+<script src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<!-- and for Highcharts only, also include -->
+<script src="http://code.highcharts.com/modules/exporting.src.js"></script>
+```
+
+And use the download option.
+
+```javascript
+new Chartkick.LineChart("chart-1", data, {"download": true});
+```
+
+**Note:** In all versions of IE, the download button is hidden since [data URIs cannot be used for navigation](http://msdn.microsoft.com/en-us/library/cc848897.aspx).
 
 ## Examples
 
