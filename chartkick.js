@@ -127,14 +127,19 @@
     };
   }
 
+  // no op
+  var waitForLoaded = function(callback) {
+    callback();
+  };
+
+  var getSVG = function(element) {
+    return element.getElementsByTagName("svg")[0].parentNode.innerHTML;
+  };
+
   // only functions that need defined specific to charting library
-  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart, waitForLoaded, getSVG;
+  var renderLineChart, renderPieChart, renderColumnChart, renderBarChart, renderAreaChart;
 
   if ("Highcharts" in window) {
-    waitForLoaded = function(callback) {
-      callback();
-    };
-
     getSVG = function(element) {
       return $(element).highcharts().getSVG({exporting: {sourceWidth: $(element).width()}});
     };
@@ -304,10 +309,6 @@
       if (loaded) {
         callback();
       }
-    };
-
-    getSVG = function(element) {
-      return element.getElementsByTagName("svg")[0].parentNode.innerHTML;
     };
 
     // Set chart options
